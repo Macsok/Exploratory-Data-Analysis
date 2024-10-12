@@ -3,7 +3,7 @@ An attempt to solve Solvro challenge
 
 # An approach to the problem
 <div align="center">
-<img src="/assets/idea.png" alt="mindmap" title="mindmap" height="400"/>
+<img src="/assets/idea.png" alt="mindmap" title="mindmap" height="700"/>
 </div>
 
 # Process of learning - date stamps of exploration
