@@ -1,5 +1,5 @@
 # Solvro-challenge
-An attempt to solve Solvro challenge
+An attempt to solve a Solvro challenge
 
 # An approach to the problem
 <div align="center">
