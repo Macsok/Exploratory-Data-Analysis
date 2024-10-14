@@ -30,3 +30,21 @@ def unpack_and_assign_id(df_column : pd.DataFrame) -> Tuple[pd.DataFrame, pd.Dat
 
     # idx = pd.DataFrame({df_column.name + 'ID' : indexes})
     return result, indexes
+
+
+def analyze_ingredients(data : pd.DataFrame, ingredients : pd.DataFrame) -> pd.DataFrame:
+    """Takes DataFrame as an input and outputs list of all ingredients (records from separate DataFrame) found in the 'ingredientsID' tab."""
+    #set new indexing in list
+    data = data.reset_index()
+    #initialize new DataFrame
+    cocktail_ingr = pd.DataFrame([])
+
+    for index in range(data.shape[0]):
+        ingr_list = data['ingredientsID'][index]
+        mask = ingredients['id'].isin(ingr_list)
+        
+        #update new DataFrame
+        to_append = ingredients.loc[mask]
+        cocktail_ingr = pd.concat([cocktail_ingr, to_append])
+
+    return cocktail_ingr
