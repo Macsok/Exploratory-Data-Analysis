@@ -48,3 +48,26 @@ def analyze_ingredients(data : pd.DataFrame, ingredients : pd.DataFrame) -> pd.D
         cocktail_ingr = pd.concat([cocktail_ingr, to_append])
 
     return cocktail_ingr
+
+
+def dataset_preprocessing(df : pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    '''Preprocesses provided dataset (specified for cocktail_dataset). Returns tuple of pd.DataFrame, [df, ingredniets_column]'''
+
+    # extracting ingredients column
+    ingredients, df['ingredientsID'] = unpack_and_assign_id(df['ingredients'])
+
+    # droping columns
+    df = df.drop(columns = ['imageUrl', 'ingredients', 'tags', 'alcoholic'])
+    ingredients = ingredients.drop(columns = ['imageUrl', 'measure'])
+
+    # correcting data types
+    for header in ['percentage']:
+        ingredients[header] = ingredients[header].apply(lambda a: 0 if pd.isna(a) else a)
+
+    df['createdAt'] = pd.to_datetime(df['createdAt'])
+    df['updatedAt'] = pd.to_datetime(df['updatedAt'])
+
+    ingredients['createdAt'] = pd.to_datetime(ingredients['createdAt'])
+    ingredients['updatedAt'] = pd.to_datetime(ingredients['updatedAt'])
+
+    return df, ingredients
