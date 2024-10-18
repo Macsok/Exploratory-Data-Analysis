@@ -13,3 +13,4 @@ An attempt to solve a Solvro challenge
   - 13.10.2024    unpacking and extracting indexes, 1.5h
   - 14.10.2024    answered for a couple of questions about the dataset, wrote script that extracts ingredients from list of cocktails, 3.5h
   - 17.10.2024    preprocessing data script, started scikit-learn analysis, 0.5h
+  - 18.10.2024    ingredients reference to list, 1h
