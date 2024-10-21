@@ -15,4 +15,4 @@ An attempt to solve a Solvro challenge
   - 17.10.2024    preprocessing data script, started scikit-learn analysis, 0.5h
   - 18.10.2024    ingredients reference to list, 1h
   - 19.10.2024    list of ingredients to list of names function, K-means, 1.5h
-  - 21.10.2024    cleaned up scikit-learn analysis, clusterization and prediction scripts, 1.5h
+  - 21.10.2024    cleaned up scikit-learn analysis, clusterization and prediction scripts, 2h
