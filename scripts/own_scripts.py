@@ -1,5 +1,9 @@
 import pandas as pd
 from typing import Tuple
+from IPython.display import display
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.cluster import KMeans
 
 
 def unpack_data_json(df_column : pd.DataFrame) -> pd.DataFrame:
@@ -97,3 +101,47 @@ def ingredients_to_names(ingredients : pd.DataFrame, ingredients_list : pd.DataF
         column_copy[index] = ', '.join(name_list)
     
     return column_copy
+
+
+def recommend_cocktails(cocktail_name : str, df : pd.DataFrame):
+    """Takes actual cocktail name and DataFrame (with ingredients list column), counts similarity between cocktails and returns 3 most matching cocktails (from most to least similar)."""
+
+    # vectorizing ingredients
+    vectorizer = CountVectorizer()
+    ingredient_matrix = vectorizer.fit_transform(df['ingredients'])
+
+    # cosine similarity matrix
+    similarity_matrix = cosine_similarity(ingredient_matrix)
+
+    indices = pd.Series(df.index, index=df['name']).drop_duplicates()
+    idx = indices[cocktail_name]
+    
+    # sorting according to similarity
+    sim_scores = list(enumerate(similarity_matrix[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    
+    # choose 3 most matching ones
+    sim_scores = sim_scores[1:4]
+    cocktail_indices = [i[0] for i in sim_scores]
+    
+    return df['name'].iloc[cocktail_indices].to_list()
+
+
+def print_similar_cocktails(df : pd.DataFrame, similar_to : str) -> None:
+    """Prints most similar cocktails to provided one."""
+    print('Your cocktail:')
+    display(df.loc[ df['name'] == similar_to])
+    print('Suggested coctails (most similar at the top):')
+    res = pd.DataFrame([])
+    for one in recommend_cocktails(similar_to, df): res = res.append(df.loc[ df['name'] == one], ignore_index=True)
+    display(res)
+
+
+def clusterization(df : pd.DataFrame, clusters : int) -> pd.DataFrame:
+    """Clusters provided DataFrame by similarity of ingredients used."""
+    # vectoriznig and clustering using scikit-learn
+    vectorizer = CountVectorizer()
+    ingredient_matrix = vectorizer.fit_transform(df['ingredients'])
+    kmeans = KMeans(n_clusters=clusters)
+    
+    return pd.DataFrame(kmeans.fit_predict(ingredient_matrix))
