@@ -6,8 +6,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.cluster import KMeans
 
 
-def unpack_data_json(df_column : pd.DataFrame) -> pd.DataFrame:
-    """Takes pandas DataFrame column as an input. Iterates rows and upacks them. Returns new dataframe as a result"""
+def unpack_data_json(df_column: pd.DataFrame) -> pd.DataFrame:
+    """Takes pandas DataFrame column as an input. 
+    Iterates rows and upacks them. Returns new dataframe as a result"""
     result = pd.DataFrame([])
 
     for index in range(df_column.shape[0]):
@@ -17,8 +18,11 @@ def unpack_data_json(df_column : pd.DataFrame) -> pd.DataFrame:
     return result
 
 
-def unpack_and_assign_id(df_column : pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """Takes pandas DataFrame column as an input. Iterates rows and upacks them. Returns new dataframe and list of lists of indexes as a result"""
+def unpack_and_assign_id(
+        df_column: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Takes pandas DataFrame column as an input. 
+    Iterates rows and upacks them. 
+    Returns new dataframe and list of lists of indexes as a result"""
     #TODO: f() -> dataframe, dataframe
     
     result = pd.DataFrame([])
@@ -36,8 +40,11 @@ def unpack_and_assign_id(df_column : pd.DataFrame) -> Tuple[pd.DataFrame, pd.Dat
     return result, indexes
 
 
-def analyze_ingredients(data : pd.DataFrame, ingredients : pd.DataFrame) -> pd.DataFrame:
-    """Takes DataFrame as an input and outputs list of all ingredients (records from separate DataFrame) found in the 'ingredientsID' tab."""
+def analyze_ingredients(
+        data: pd.DataFrame,
+        ingredients: pd.DataFrame) -> pd.DataFrame:
+    """Takes DataFrame as an input and outputs list of all ingredients 
+    (records from separate DataFrame) found in the 'ingredientsID' tab."""
     #set new indexing in list
     data = data.reset_index()
     #initialize new DataFrame
@@ -54,8 +61,12 @@ def analyze_ingredients(data : pd.DataFrame, ingredients : pd.DataFrame) -> pd.D
     return cocktail_ingr
 
 
-def dataset_preprocessing(df : pd.DataFrame, drop_times = True) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """Preprocesses provided dataset (specified for cocktail_dataset). Returns tuple of pd.DataFrame, [df, ingredniets_column]. Set drop_times to False to get timestamps"""
+def dataset_preprocessing(
+        df: pd.DataFrame, 
+        drop_times: bool = True) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Preprocesses provided dataset (specified for cocktail_dataset). 
+    Returns tuple of pd.DataFrame, [df, ingredniets_column]. 
+    Set drop_times to False to get timestamps"""
 
     # extracting ingredients column
     ingredients, df['ingredientsID'] = unpack_and_assign_id(df['ingredients'])
@@ -82,8 +93,10 @@ def dataset_preprocessing(df : pd.DataFrame, drop_times = True) -> Tuple[pd.Data
     return df, ingredients
 
 
-def ingredients_to_names(ingredients : pd.DataFrame, ingredients_list : pd.DataFrame, to_list = False) -> pd.DataFrame:
-    """Matches each ingredients list with names, returns a column of names in lists. Set to_list option to True to get results in list."""
+def ingredients_to_names(ingredients: pd.DataFrame, 
+                         ingredients_list: pd.DataFrame) -> pd.DataFrame:
+    """Matches each ingredients list with names, returns a column of names in lists. 
+    Set to_list option to True to get results in list."""
     # TODO: optimalization
     # intitailization, and copying the data column
     column_copy = ingredients_list.copy()
@@ -103,8 +116,10 @@ def ingredients_to_names(ingredients : pd.DataFrame, ingredients_list : pd.DataF
     return column_copy
 
 
-def recommend_cocktails(cocktail_name : str, df : pd.DataFrame):
-    """Takes actual cocktail name and DataFrame (with ingredients list column), counts similarity between cocktails and returns 3 most matching cocktails (from most to least similar)."""
+def recommend_cocktails(cocktail_name: str, 
+                        df: pd.DataFrame):
+    """Takes actual cocktail name and DataFrame (with ingredients list column), 
+    counts similarity between cocktails and returns 3 most matching cocktails (from most to least similar)."""
 
     # vectorizing ingredients
     vectorizer = CountVectorizer()
@@ -127,7 +142,8 @@ def recommend_cocktails(cocktail_name : str, df : pd.DataFrame):
     return df['name'].iloc[cocktail_indices].to_list()
 
 
-def print_similar_cocktails(df : pd.DataFrame, similar_to : str) -> None:
+def print_similar_cocktails(df: pd.DataFrame, 
+                            similar_to: str) -> None:
     """Prints most similar cocktails to provided one."""
     print('Your cocktail:')
     display(df.loc[ df['name'] == similar_to])
@@ -137,7 +153,8 @@ def print_similar_cocktails(df : pd.DataFrame, similar_to : str) -> None:
     display(res)
 
 
-def clusterization(df : pd.DataFrame, clusters : int) -> pd.DataFrame:
+def clusterization(df: pd.DataFrame, 
+                   clusters: int) -> pd.DataFrame:
     """Clusters provided DataFrame by similarity of ingredients used."""
     # vectoriznig and clustering using scikit-learn
     vectorizer = CountVectorizer()
