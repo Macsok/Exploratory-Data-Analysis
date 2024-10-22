@@ -1,5 +1,34 @@
-# Solvro-challenge
-An attempt to solve a Solvro challenge
+# Exploratory Data Analysis of the TheCocktailDB
+An attempt to solve a Solvro challenge.
+
+## Description
+...
+
+## Installation
+
+### Prerequisites
+- Python 3.x
+
+### Steps to Install Required Libraries
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/Macsok/Solvro-EDA-challenge
+    cd your-repository
+    ```
+
+2. Install the required libraries:
+    ```sh
+    pip install -r dependencies/requirements.txt
+    ```
+
+### Required Libraries
+- `nltk`
+- `googletrans==4.0.0-rc1`
+
+Alternatively, you can install the libraries directly (example):
+```sh
+pip install nltk googletrans==4.0.0-rc1
+```
 
 # An approach to the problem
 <div align="center">
