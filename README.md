@@ -24,6 +24,14 @@ An attempt to solve a Solvro challenge.
 ### Required Libraries
 - `nltk`
 - `googletrans==4.0.0-rc1`
+- `pandas`
+- `matplotlib`
+- `numpy`
+- `sys`
+- `os`
+- `seaborn`
+- `sklearn`
+- `typing`
 
 Alternatively, you can install the libraries directly (example):
 ```sh
