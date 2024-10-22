@@ -1,8 +1,10 @@
 import pandas as pd
 from typing import Tuple
+import matplotlib.pyplot as plt
 from IPython.display import display
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 
 
@@ -162,3 +164,46 @@ def clusterization(df: pd.DataFrame,
     kmeans = KMeans(n_clusters=clusters)
     
     return pd.DataFrame(kmeans.fit_predict(ingredient_matrix))
+
+
+def plot_cocktail_clusters(
+        df: pd.DataFrame, 
+        n_clusters: int = 3, 
+        print_labels: bool = True) -> plt.Axes:
+    """Plots every cocktail of each cluster in diffrent colour (5 different)."""
+    # Convert 'ingredients' to a matrix of token counts
+    vectorizer = CountVectorizer()
+    ingredient_matrix = vectorizer.fit_transform(df['ingredients'])
+
+    # KMeans clustering
+    kmeans = KMeans(n_clusters=n_clusters)
+    df['cluster'] = kmeans.fit_predict(ingredient_matrix)
+
+    # PCA (Principal Component Analysis) transformation for visualization
+    pca = PCA(n_components=2)
+    ingredient_pca = pca.fit_transform(ingredient_matrix.toarray())
+
+    # Convert to DataFrame
+    pca_df = pd.DataFrame(ingredient_pca, columns=['PC1', 'PC2'])
+    pca_df['cluster'] = df['cluster']
+    pca_df['name'] = df['name']
+
+    # Plotting the clusters
+    fig, ax = plt.subplots(figsize=(14, 8))
+    colors = ['blue', 'green', 'red', 'purple', 'pink']  # Adjust for more clusters
+    markers = ['o', 's', 'D', '^', 's']  # Adjust for more clusters
+
+    for cluster in pca_df['cluster'].unique():
+        subset = pca_df[pca_df['cluster'] == cluster]
+        ax.scatter(subset['PC1'], subset['PC2'], c=colors[cluster % 5], marker=markers[cluster % 5], label=f'Cluster {cluster % 5}')
+        if print_labels:
+            for i in range(subset.shape[0]):
+                ax.text(subset['PC1'].iloc[i], subset['PC2'].iloc[i], subset['name'].iloc[i], fontsize=9)
+
+    ax.set_title('Cocktail Clusters')
+    ax.set_xlabel('Principal Component 1')
+    ax.set_ylabel('Principal Component 2')
+    ax.legend()
+    ax.grid(True)
+
+    return ax
