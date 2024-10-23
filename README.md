@@ -54,3 +54,4 @@ pip install nltk googletrans==4.0.0-rc1
   - 19.10.2024    list of ingredients to list of names function, K-means, 1.5h
   - 21.10.2024    cleaned up scikit-learn analysis, clusterization and prediction scripts, 2h
   - 22.10.2024    clustered visualization, brief documentation, 2h
+  - 23.10.2024    report preparation, 1.5h
