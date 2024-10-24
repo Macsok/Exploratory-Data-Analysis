@@ -55,3 +55,4 @@ pip install nltk googletrans==4.0.0-rc1
   - 21.10.2024    cleaned up scikit-learn analysis, clusterization and prediction scripts, 2h
   - 22.10.2024    clustered visualization, brief documentation, 2h
   - 23.10.2024    report preparation, 1.5h
+  - 24.10.2024    reporting cocktail only analyse, 2h
