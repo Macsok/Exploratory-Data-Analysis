@@ -13,7 +13,7 @@ An attempt to solve a Solvro challenge.
 1. Clone the repository:
     ```sh
     git clone https://github.com/Macsok/Solvro-EDA-challenge
-    cd your-repository
+    cd Solvro-EDA-challenge
     ```
 
 2. Install the required libraries:
