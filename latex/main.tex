@@ -43,7 +43,7 @@ Main part of the data collection consists of \textbf{134} rows and \textbf{11} c
 
 The columns are: id, name, category, glass, tags, instructions, imageUrl, alcoholic, createdAt, updatedAt, ingredients. Every column excpet 'id' and 'alcoholic' have object type. Other two are represented as int64.
 
-In 'ingredients' column there is nested information about ingredients. Each drink have own piece of ingredients information there. If you unpack such block of information there will be data about ingredients needed to prepare such drink. Every record in 'ingredients' table has 10 attributes. They are as follows: id, name, alcohol, type, percentage, imageUrl, createdAt, updatedAt, measure. After unpacking ingredients data from every cocktail there will be \textbf{531} unique records in the 'ingredients' table.
+In 'ingredients' column there is nested information about ingredients. Each drink have own piece of ingredients information there. If you unpack such block of information there will be data about ingredients needed to prepare such drink. Every record in 'ingredients' table has \textbf{10} attributes. They are as follows: id, name, alcohol, type, percentage, imageUrl, createdAt, updatedAt, measure. After unpacking ingredients data from every cocktail there will be \textbf{531} unique records in the 'ingredients' table.
 
 \begin{figure}[H]
     \centering
@@ -99,8 +99,7 @@ In that case further explorations of the dataset will exclude 'imageUrl' and 'al
 \section{Exploring cocktails alone}
 In this section we pay attention only to cocktails - we won't unpack data from 'ingredients' column. In this case we drop four columns: 'ingredients', 'imageUrl', 'alcoholic', 'tags'.
 \subsection{Is there something hidden in those times?}
-Creating and updating times may seem harmless and boring but is there something hidden? Let's plot them and find out! Figure 6 shows the result, seems that nothing interesting was hidden there. Next we will simplify a little and assume that length of the instruction is somehow relevant to level of preparation complexity. We will replace textual value of instructions with the length of it. Below (on Figure 7) you can see brief code and the results of such operation. In this case we can, for example, find relations between type of the glass and the instruction length. Figure 8 presents lenghts of the instruction per every type of glass. Each red dot represents one cocktail. We can spot that Highball glasses tend to have a little longer instructions than Cocktail glasses. Old-fashioned glass drinks' instruction length vary more than Cocktails glass ones which are more regular.
-\vspace{4cm}
+Creating and updating times may seem harmless and boring but is there something hidden? Let's plot them and find out! Figure 6 shows the result, seems that nothing interesting was hidden there. 
 
 \begin{figure}[H]
     \centering
@@ -108,6 +107,9 @@ Creating and updating times may seem harmless and boring but is there something 
     \caption{Times of creating and upgrading cocktails}
     \label{fig:enter-label}
 \end{figure}
+
+\subsection{Exploring other properties}
+Next we will simplify a little and assume that length of the instruction is somehow relevant to level of preparation complexity. We will replace textual value of instructions with the length of it. Below (on Figure 7) you can see brief code and the results of such operation. In this case we can, for example, find relations between type of the glass and the instruction length. Figure 8 presents lenghts of the instruction per every type of glass. Each red dot represents one cocktail. We can spot that Highball glasses tend to have a little longer instructions than Cocktail glasses. Old-fashioned glass drinks' instruction length vary more than Cocktails glass ones which are more regular.
 
 \begin{figure}[H]
     \centering
@@ -142,7 +144,52 @@ Similarly we can count the frequency of using each glass type in drinks and pres
     \label{fig:enter-label}
 \end{figure}
 
-As we can see most commonly used glass type is Cocktail glass, second one is Old-fashioned glass and on third position there is Highball glass. The top one leaves opponents far behind.
+As we can see the most commonly used glass type is Cocktail glass, second one is Old-fashioned glass and on third position there is Highball glass. The top one leaves opponents far behind.
+
+\section{Exploring ingredients alone}
+In this section we will take closer look on data containing only ingredients of the cocktails. Similarly to the previous section we won't pay attention to the connections between drinks and their ingredients - at least not yet. In this part data about every cocktail ingredients is stored in separate table.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{ingrhead.png}
+    \caption{Head of the ingredients dataframe}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Missing values and duplicates}
+Checking each column shows that many of them have missing values:
+\begin{itemize}
+    \item 431 records from 'percentage'
+    \item 224 records from 'description'
+    \item 121 records from 'type'
+    \item 35 records from 'measure'
+\end{itemize}
+Note that a shape of ingredients dataframe is \textbf{11 x 531}.
+
+Each column have it individual explanation of shortage. 'percentage' column is missing values in every record that has 0 percent. To repair this issue we can simply map every NaN value to zero. 'description' column is missing information for simple ingredients such as water. 'type' and 'measure' are just not specified in some cases of the ingredients (missing measure of added water, water and sugar have none type). Due to lack of the information in the 'description' column and not normalized data in 'measure' column we won't consider those in further analysis (normalising measure column could be a fun thing to do...).
+
+There are many duplicates in the 'name' column cause of the usage of similar ingredients in different drinks. For example there are many records of 'Gin' with various types of the measurement.
+
+\subsection{Exploring ingredients}
+Before diving into world of relations and connections we can make some corrections in data types of our set. As before we will updated data type in columns which store date information. Furthermore we will map every missing value to 0 (not recommended in every case).
+
+Having prepared data we can start playing with it. Again we will try to extract information from every bit of the data - we will analyze apdatig time again. This time it looks more promising as it is not a straight boring line (Figure 13). Most of the updates were made at the beginning - around 19.01 - then it lapsed down and there was another peak of updates around 19.02.30. After it, it went down again. Was there something useful? Well... Maybe not but again - we are here to learn and try to find hidden relations.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{lambdaingr.png}
+    \caption{Correcting data types}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{updatetimes.png}
+    \caption{Update times of the ingredients plotted on time axis}
+    \label{fig:enter-label}
+\end{figure}
+
+
 
 
 
