@@ -57,4 +57,5 @@ pip install nltk googletrans==4.0.0-rc1
   - 23.10.2024    report preparation, 1.5h
   - 24.10.2024    reporting cocktail only analyse, 2h
   - 25.10.2024    reporting ingredients analyse, 2h
-  - 26.10.2024    reporting whole dataset analysis, 2h
+  - 26.10.2024    reporting whole dataset analysis, script correction, 2h
+  - 27.10.2024    reporting clusterisation, 1h
