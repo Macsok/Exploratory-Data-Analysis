@@ -4,13 +4,11 @@ An attempt to solve an exploratory data analysis challenge proposed by Solvro. T
 ## Report description
 The Exploratory Data Analysis (EDA) presented in this report investigates a dataset of 134 cocktails, aiming to uncover key characteristics, relationships between ingredients, and groupings of similar drinks. The analysis emphasizes the importance of understanding the data through visualization and descriptive statistics, while also addressing issues like missing values and ingredient consistency. Using clustering techniques, the report categorizes cocktails based on ingredient similarities, providing insights that can enhance cocktail recommendations. Overall, this EDA serves as a foundational step for further research and development in the realm of cocktail analysis and recommendations.
 
-**note: **
-
 # Download the repository
 Clone the repository:
 ```sh
-git clone https://github.com/Macsok/Solvro-EDA-challenge
-cd Solvro-EDA-challenge
+git clone https://github.com/Macsok/ExploratoryDataAnalysis
+cd ExploratoryDataAnalysis
 ```
 
 # Using Virtualenv
