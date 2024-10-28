@@ -7,8 +7,8 @@ The Exploratory Data Analysis (EDA) presented in this report investigates a data
 # Download the repository
 Clone the repository:
 ```sh
-git clone https://github.com/Macsok/ExploratoryDataAnalysis
-cd ExploratoryDataAnalysis
+git clone https://github.com/Macsok/Exploratory-Data-Analysis
+cd Exploratory-Data-Analysis
 ```
 
 # Using Virtualenv
