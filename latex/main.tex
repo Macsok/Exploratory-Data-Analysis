@@ -10,8 +10,33 @@
 
 \begin{document}
 
-\maketitle
-\vspace{5cm}
+\begin{titlepage}
+   \begin{center}
+        \vspace*{4cm}
+
+        \Huge
+        \textbf{Exploratory Data Analysis}
+        \vspace{0.5cm}
+
+        \LARGE
+        Data Investigation Report
+        \vspace{2.5cm}
+       
+        \textbf{github.com/Macsok}
+
+        \Large
+        \vfill
+        October 2024   
+   \end{center}
+\end{titlepage}
+
+
+
+% \maketitle
+
+\newpage
+\tableofcontents
+\newpage
 
 \section{Introduction}
 \subsection{What is EDA?}
@@ -173,7 +198,7 @@ There are many duplicates in the 'name' column cause of the usage of similar ing
 \subsection{Exploring ingredients}
 Before diving into world of relations and connections we can make some corrections in data types of our set. As before we will updated data type in columns which store date information. Furthermore we will map every missing value to 0 (not recommended in every case).
 
-Having prepared data we can start playing with it. Again we will try to extract information from every bit of the data - we will analyze apdatig time again. This time it looks more promising as it is not a straight boring line (Figure 13). Most of the updates were made at the beginning - around 19.01 - then it lapsed down and there was another peak of updates around 19.02.30. After it, it went down again. Was there something useful? Well... Maybe not but again - we are here to learn and try to find hidden relations.
+Having prepared data we can start playing with it. Again we will try to extract information from every bit of the data - we will analyze updatig times again (Figure 13). This time it looks more promising as it is not a straight boring line. Most of the updates were made at the beginning - around 19.01 - then it lapsed down and there was another peak of updates around 19.02.30. After it, it went down again. Was there something useful? Well... Maybe not but again - we are here to learn and try to find hidden relations.
 
 \begin{figure}[H]
     \centering
@@ -189,8 +214,148 @@ Having prepared data we can start playing with it. Again we will try to extract 
     \label{fig:enter-label}
 \end{figure}
 
+\subsection{Questions and answers}
+This part will focus on answering some questions about data in 'ingredients' table.
+\begin{itemize}
+    \item What is top 10 most used types of the ingredients?
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{top10itypes.png}
+        \caption{Top 10 most used types of the ingredients}
+        \label{fig:enter-label}
+    \end{figure}
+    Most used ingredient is labeled as a '0'. Knowing that we have replaced every missing values before it means that this category covers ingredients that couldn't have been labeled (ex. water and sugar).
 
+    \item What are the most used ingredients?
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\linewidth]{most used ingr.png}
+        \caption{Most used components}
+        \label{fig:enter-label}
+    \end{figure}
+    The most used ingredient is Gin. Next two components in the list are alcohols as well - the main ingredient of the cocktail is the alcohol!
 
+    \item Which ingredients are more populated along all the ingredients: alcoholic or non-alcoholic?
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\linewidth]{alcoholicvs.png}
+        \caption{Alcoholic vs non-alcoholic ingredients}
+        \label{fig:enter-label}
+    \end{figure}
+    Both types of the ingredients are on similar level with little domination on the alcoholic side. Have in mind that this comparison one cube of an ice is worth as much as one liter of a gin.
 
+    \item What is an average percentage among all of the ingredients?
+    Answer: Average percentage per ingredient is: 6.79\%. Every non-alcoholic component of drinks was labeled with 0\%.
+\end{itemize}
+
+\section{Analysis of whole dataset}
+In this approach we will try to represents each cocktail ingredients as list of indexes. Cocktails will be stored in one DataFrame object and all ingredients will be stored in another DataFrame. We will try to find connections and relations between them. Here is fragment of a code that is responsible for unpacking and storing lists of indexes of ingredients:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{code_unpacking.png}
+    \caption{Fragment of a code representing function which unpacks each list of indexes}
+    \label{fig:enter-label}
+\end{figure}
+Based on previous analyses we drop some of columns:
+\begin{itemize}
+    \item imageUrl - unnecessary in our analysis
+    \item ingredients - we store those in another DataFrame object
+    \item tags - missing values
+    \item alcoholic - every drink is alcoholic
+    \item measure - not normalized
+\end{itemize}
+
+\subsection{Questions and answers}
+\begin{itemize}
+    \item Is there any relationship between instruction length and number of used ingredients?
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.75\linewidth]{instructionlen.png}
+        \caption{Regression of a instruction length}
+        \label{fig:enter-label}
+    \end{figure}
+    We can clearly see that as number of ingredients grows, length of an instruction is growing. Approximately every additional ingredient adds 20 symbols to length of an instruction.
+
+    \item According to the data, there are around 25 drinks served in an Old-fashioned glass. Which ingredient is the most used in these drinks? To answer this question, we need to filter the DataFrame to include only drinks served in an Old-fashioned glass. Then, for each list of ingredients, we need to find the names of the components and increase the counter for each one. A result shows that most used ingredient in such glass type is powdered sugar which appeared 15 times.
+\end{itemize}
+
+\section{Analysis using scikit-learn library}
+This sections focuses on analysing our dataset using library that provides a wide range of tools for machine learning, pre-processing, cross-validation, and visualization. We will store data in two tables: drinks and ingredients. This time each drink will have its own record of ingredients listed by name. This will help with vectorizing them.
+
+\subsection{Clustering}
+Here we divide our drinks in such a way that objects in the same group (called a cluster) are more similar to each other than to those in other groups. It's a key technique in data mining and machine learning, often used to find hidden patterns or natural groupings in data. Our separation will be based on similarity in used ingredients.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{clusterization.png}
+    \caption{Fragment of code representing function used to assign a cluster to each record}
+    \label{fig:enter-label}
+\end{figure}
+
+Observations shows that dividing data into 3 clusters separates cocktails by ingredients in which indeed drinks have common ingredients. Figure 20 shows that drinks in cluster '1' tends to be made of light rum and some kind of lemon/lime. Cocktails in cluster '0' most likely will consider some kind of sugar (regular, powdered). Drinks in cluster '2' tends to consist of gin and vermouth.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{clustered head.png}
+    \caption{Fragment of a clustered DataFrame}
+    \label{fig:enter-label}
+\end{figure}
+
+Having each cocktail allotted to a cluster we can transform all to them to a 2D plane which will let us show it on a grid.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{plotclusters.png}
+    \caption{Clustered data on 2D plane (3 clusters)}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Cocktail recommendation}
+Vectorizing list of ingredients give us plenty other applications. For example for given drink we can find similar one by finding closest point in a space of ingredients. To do such you need to count cosine similarity between given drink and every other, then simply sort list of them. This way you can find most similar (or lest similar) cocktail to the provided one. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{recommendedcocktail.png}
+    \caption{Results of running recommendation script for 'Apricot Lady'}
+    \label{fig:enter-label}
+\end{figure}
+
+Observations shows that suggested drinks most often are in a cluster of the provided one. Similarity in ingredients list and the same cluster group proves good clusterization and recommendation.
+
+\section{Results}
+The exploratory data analysis of the cocktail dataset, containing 134 drinks and 531 unique ingredients, produced several key findings about the drinks and their ingredient profiles. The data was extensively pre-processed, including handling missing values, excluding uninformative columns, and adjusting for inconsistent IDs and data types. Notable observations include the following:
+
+\subsection{Cocktail Characteristics}
+\begin{itemize}
+    \item Cocktail instructions varied by glass type; for example, Highball glasses often had longer instructions, possibly reflecting more complex recipes. Categories such as "Cocktail" and "Ordinary Drink" were prevalent, with "Cocktail Glass" being the most commonly used glass type.
+    \item Time columns (createdAt, updatedAt) and instruction length were examined for patterns, though no significant trends were uncovered in the creation or update times.
+\end{itemize}
+
+\subsection{Ingredient Patterns}
+\begin{itemize}
+    \item Ingredients such as gin and other alcohol types appeared frequently, reinforcing the central role of alcohol in cocktail composition. Duplicates in the ingredients (e.g., multiple entries for gin) indicated variations in measures and types across cocktails.
+    \item Missing values were addressed by assigning zeroes to the missing alcohol percentages, and other incomplete data, such as ingredient types, were excluded from further analyses.
+\end{itemize}
+
+\subsection{Clustering and Cocktail Similarity}
+\begin{itemize}
+    \item A clustering analysis using scikit-learn divided cocktails into three primary clusters based on their ingredient lists. Cluster 1 cocktails often contained light rum and citrus, Cluster 0 cocktails commonly included sugar, and Cluster 2 cocktails were typically made with gin and vermouth.
+    \item Vectorization of ingredient lists allowed for cocktail recommendations by identifying the most similar drinks within the same cluster, which was achieved through cosine similarity calculations.
+\end{itemize}
+
+\subsection{Additional Insights}
+\begin{itemize}
+    \item Instruction length showed a linear correlation with the number of ingredients, with each additional ingredient adding approximately 20 characters to the instructions.
+    \item Cocktails served in Old-fashioned glasses frequently contained powdered sugar, indicating potential ingredient patterns associated with specific glassware.
+\end{itemize}
+
+\section{Conclusions}
+The EDA provided a comprehensive understanding of the cocktail dataset and allowed for a successful categorization of drinks based on ingredients and types. The clustering analysis effectively grouped cocktails by ingredient similarity, enabling a structured recommendation system. Several challenges were encountered, including missing values, duplicate entries, and inconsistencies in ingredient measurements. Addressing these issues improved data quality and made clustering and similarity analyses feasible.
+
+\subsection{Perspectives for Further Research}
+The insights from this analysis suggest that glass types, ingredient combinations, and instruction lengths can influence the classification of cocktails. Additionally, the recommendation model provides a foundation for further refinement, allowing users to explore similar cocktails based on their ingredient preferences. Future work could involve normalizing measures for more accurate ingredient comparisons and expanding clustering methods to explore additional cocktail attributes.
+
+\subsection{Acknowledgment}
+Large language models (LLMs) were used to assist in summarizing the analysis, and all necessary corrections were subsequently made to ensure accuracy and clarity in the report.
 
 \end{document}
