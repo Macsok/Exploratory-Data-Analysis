@@ -1,5 +1,5 @@
 # Exploratory Data Analysis
-An attempt to solve an exploratory data analysis challenge proposed by Solvro.
+An attempt to solve an exploratory data analysis challenge proposed by Solvro. This repository contains all files and scripts used in the analysis. The entire work is documented in the `Exploratory_Data_Analysis_report.pdf` file. Nonetheless, I strongly recommend reviewing the script files and following the data mining pattern. The project took over 30 hours to complete.
 
 ## Report description
 The Exploratory Data Analysis (EDA) presented in this report investigates a dataset of 134 cocktails, aiming to uncover key characteristics, relationships between ingredients, and groupings of similar drinks. The analysis emphasizes the importance of understanding the data through visualization and descriptive statistics, while also addressing issues like missing values and ingredient consistency. Using clustering techniques, the report categorizes cocktails based on ingredient similarities, providing insights that can enhance cocktail recommendations. Overall, this EDA serves as a foundational step for further research and development in the realm of cocktail analysis and recommendations.
@@ -78,3 +78,4 @@ You can learn more about virtual environments at: https://python.land/virtual-en
   - 25.10.2024    reporting ingredients analyse, 2h
   - 26.10.2024    reporting whole dataset analysis, script correction, 2h
   - 27.10.2024    reporting clusterisation, 1h
+  - 28.10.2024    report summary, repository description, 3.5h
