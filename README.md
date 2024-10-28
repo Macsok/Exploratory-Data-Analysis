@@ -4,9 +4,14 @@ An attempt to solve a Solvro challenge.
 ## Description
 ...
 
+# Download the repository
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/Macsok/Solvro-EDA-challenge
+    cd Solvro-EDA-challenge
+    ```
+
 # Using Virtualenv
-## Prerequisites
-- Python 3.x
 Use virtualenv to isolate project dependencies, ensuring no conflicts between different projects.
 First, install Virtualenv if you haven't already:
 ```sh
@@ -35,39 +40,25 @@ Delete the Virtual Environment (if your virtual environment is in a directory ca
 rm -r venv
 ```
 
-### Steps to Install Required Libraries
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/Macsok/Solvro-EDA-challenge
-    cd Solvro-EDA-challenge
-    ```
+You can learn more about virtual environments at: https://python.land/virtual-environments/virtualenv
 
-2. Install the required libraries:
-    ```sh
-    pip install -r dependencies/requirements.txt
-    ```
-
-### Required Libraries
-- `nltk`
-- `googletrans==4.0.0-rc1`
+## Prerequisites
+- Python 3.x
+    
+## Required Libraries
 - `pandas`
 - `matplotlib`
 - `numpy`
-- `sys`
-- `os`
 - `seaborn`
-- `sklearn`
+- `scikit-learn`
 - `typing`
 
-Alternatively, you can install the libraries directly (example):
-```sh
-pip install nltk googletrans==4.0.0-rc1
-```
-
+<!--
 # An approach to the problem
 <div align="center">
 <img src="/assets/idea.png" alt="mindmap" title="mindmap" height="500"/>
 </div>
+-->
 
 # Process of learning - date stamps of the exploration
   - 10.10.2024    first look at the problem, revision of pandas, 1h
