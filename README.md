@@ -5,11 +5,11 @@ An attempt to solve a Solvro challenge.
 ...
 
 # Download the repository
-Clone the repository:
-    ```sh
-    git clone https://github.com/Macsok/Solvro-EDA-challenge
-    cd Solvro-EDA-challenge
-    ```
+    Clone the repository:
+```sh
+git clone https://github.com/Macsok/Solvro-EDA-challenge
+cd Solvro-EDA-challenge
+```
 
 # Using Virtualenv
 Use virtualenv to isolate project dependencies, ensuring no conflicts between different projects.
